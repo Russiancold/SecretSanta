@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/smtp"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strconv"
 	"time"
@@ -35,6 +36,16 @@ func main() {
 	r.HandleFunc("/create", handlers.createGroup).Methods("GET").Queries("count", "{count:[0-9]+}")
 	r.HandleFunc("/{link}", handlers.email).Methods("GET")
 	r.HandleFunc("/{link}", handlers.join).Methods("POST")
+
+	ex, err := os.Executable()
+	if err != nil {
+		panic(err)
+	}
+	exPath := filepath.Dir(ex)
+
+	r.Handle("/images/",  http.StripPrefix("/images/", http.FileServer(http.Dir(exPath + "../imgs/"))))
+	r.Handle("/styles/",  http.StripPrefix("/styles/", http.FileServer(http.Dir(exPath + "../styles/"))))
+
 	http.ListenAndServe(":8080", r)
 }
 

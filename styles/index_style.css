@@ -8,7 +8,7 @@ body {
 	height: 100%;
 	width: 100%;
 	margin: 0;	
-	background: url(index_background.jpg) no-repeat center;
+	background: url(http://localhost:8080/images/index_background.jpg) no-repeat center;
 	background-size: cover;	
 	background-color: rgba(0,0,0,.6);
     background-blend-mode: darken;
